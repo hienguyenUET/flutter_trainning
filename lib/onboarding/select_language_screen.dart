@@ -107,6 +107,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                   ),
                   child: Row(
                     children: [
+                      // Loi icon o day
                       const ImageIcon(
                         AssetImage("assets/onboarding/england_flag.png"),
                         size: 32,
