@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_trainning/login/login_screen.dart';
 
 import '../color/custom_color.dart';
 import 'indicator.dart';
@@ -28,8 +29,19 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     });
   }
 
-  nextScreen() {
-    _controller.nextPage(duration: const Duration(milliseconds: 30), curve: Curves.linear);
+  _nextScreen() {
+    if (_currentIndex < 2) {
+      _controller.nextPage(duration: const Duration(milliseconds: 30), curve: Curves.linear);
+    } else {
+      _currentIndex += 1;
+      if (_currentIndex == 3) {
+        _toLoginScreen();
+      }
+    }
+  }
+
+  _toLoginScreen() {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
 
   @override
@@ -43,23 +55,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 322,
-              top: 56,
-            ),
-            child: TextButton(
-              onPressed: () {},
-              child: const Text(
-                "Skip",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ),
           PageView(
             onPageChanged: onChangedFunction,
             controller: _controller,
@@ -129,7 +124,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   ),
                   backgroundColor: CustomColor.YELLOW_F4AD22,
                 ),
-                onPressed: nextScreen,
+                onPressed: _nextScreen,
                 child: Text(
                   _currentIndex == 2 ? "Get Started" : "Next",
                   style: const TextStyle(
@@ -140,7 +135,28 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 ),
               ),
             ),
-          )
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 56,
+            ),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: SizedBox(
+                child: TextButton(
+                  onPressed: _toLoginScreen,
+                  child: const Text(
+                    "Skip",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

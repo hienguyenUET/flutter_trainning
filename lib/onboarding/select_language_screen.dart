@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trainning/color/custom_color.dart';
 import 'package:flutter_trainning/onboarding/onboarding_screen_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectLanguageScreen extends StatefulWidget {
   const SelectLanguageScreen({Key? key}) : super(key: key);
@@ -11,11 +12,19 @@ class SelectLanguageScreen extends StatefulWidget {
 
 class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
   int _currentButton = 0;
+  late String _selectedLanguage;
 
-  void changeIndex(int index) {
+  void changeIndex(int index, String selectedLanguage) {
     setState(() {
       _currentButton = index;
+      _selectedLanguage = selectedLanguage;
     });
+  }
+
+  void selectLanguage() async {
+    SharedPreferences preference = await SharedPreferences.getInstance();
+    preference.setString("Selected Language", _selectedLanguage);
+    print(_selectedLanguage);
   }
 
   @override
@@ -23,12 +32,13 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const Padding(
               padding: EdgeInsets.only(
                 top: 104,
-                right: 68,
-                left: 67,
               ),
             ),
             const Text(
@@ -41,7 +51,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                left: 17,
+                left: 20,
                 right: 18,
                 top: 24,
               ),
@@ -50,7 +60,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                 height: 56,
                 child: TextButton(
                   onPressed: () {
-                    changeIndex(0);
+                    changeIndex(0, "Tetum");
                   },
                   style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -62,14 +72,14 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                   ),
                   child: Row(
                     children: [
-                      ImageIcon(
-                        AssetImage(
-                          "assets/onboarding/timor_flag.png",
-                        ),
-                        size: 32,
+                      const Image(
+                        image: AssetImage("assets/onboarding/timor_flag.png"),
+                        height: 32,
+                        width: 32,
+                        fit: BoxFit.fill,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 16),
+                        padding: const EdgeInsets.only(left: 16),
                         child: Text(
                           "Tetum",
                           style: TextStyle(
@@ -95,7 +105,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                 height: 56,
                 child: TextButton(
                   onPressed: () {
-                    changeIndex(1);
+                    changeIndex(1, "English");
                   },
                   style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -107,10 +117,11 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                   ),
                   child: Row(
                     children: [
-                      // Loi icon o day
-                      const ImageIcon(
-                        AssetImage("assets/onboarding/england_flag.png"),
-                        size: 32,
+                      const Image(
+                        image: AssetImage("assets/onboarding/england_flag.png"),
+                        height: 32,
+                        width: 32,
+                        fit: BoxFit.fill,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 16),
@@ -141,6 +152,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                     backgroundColor: CustomColor.YELLOW_F4AD22,
                   ),
                   onPressed: () {
+                    selectLanguage();
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const OnBoardingScreen()));
                   },
                   child: const Text(
