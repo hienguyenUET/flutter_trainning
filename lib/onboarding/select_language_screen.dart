@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trainning/color/custom_color.dart';
+import 'package:flutter_trainning/common/language.dart';
 import 'package:flutter_trainning/onboarding/onboarding_screen_main.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_trainning/shared_preference.dart';
 
 class SelectLanguageScreen extends StatefulWidget {
   const SelectLanguageScreen({Key? key}) : super(key: key);
@@ -12,19 +13,19 @@ class SelectLanguageScreen extends StatefulWidget {
 
 class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
   int _currentButton = 0;
-  late String _selectedLanguage;
+  Language _selectedLanguage = Language.english;
 
-  void changeIndex(int index, String selectedLanguage) {
+  /// Tracking user selected button
+  void changeIndex(int index, Language language) {
     setState(() {
       _currentButton = index;
-      _selectedLanguage = selectedLanguage;
+      _selectedLanguage = language;
     });
   }
 
   void selectLanguage() async {
-    SharedPreferences preference = await SharedPreferences.getInstance();
-    preference.setString("Selected Language", _selectedLanguage);
-    print(_selectedLanguage);
+    print(_selectedLanguage.value);
+    CommonPreference.sharedPreferences.setString("Selected Language", _selectedLanguage.value);
   }
 
   @override
@@ -60,7 +61,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                 height: 56,
                 child: TextButton(
                   onPressed: () {
-                    changeIndex(0, "Tetum");
+                    changeIndex(0, Language.tetum);
                   },
                   style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -81,7 +82,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 16),
                         child: Text(
-                          "Tetum",
+                          Language.tetum.value,
                           style: TextStyle(
                             color: _currentButton == 0 ? Colors.white : Colors.black,
                             fontSize: 14,
@@ -105,7 +106,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                 height: 56,
                 child: TextButton(
                   onPressed: () {
-                    changeIndex(1, "English");
+                    changeIndex(1, Language.english);
                   },
                   style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -126,7 +127,7 @@ class _SelectLanguageScreenState extends State<SelectLanguageScreen> {
                       Padding(
                         padding: const EdgeInsets.only(left: 16),
                         child: Text(
-                          "English",
+                          Language.english.value,
                           style: TextStyle(
                             color: _currentButton == 1 ? Colors.white : Colors.black,
                             fontSize: 14,

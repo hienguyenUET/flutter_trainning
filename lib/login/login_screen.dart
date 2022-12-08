@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trainning/color/custom_color.dart';
+import 'package:flutter_trainning/login/verification_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -9,6 +10,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  _toVerificationScreen() {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const VerificationScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 48,
                           width: 343,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: _toVerificationScreen,
                             style: TextButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
@@ -110,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
+                        mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
                             "Do NOT have Mosan account?",
@@ -141,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 45,
                     width: 103,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: _toVerificationScreen,
                       style: TextButton.styleFrom(
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(

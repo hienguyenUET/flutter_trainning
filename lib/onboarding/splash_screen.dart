@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_trainning/login/login_screen.dart';
 import 'package:flutter_trainning/onboarding/select_language_screen.dart';
+import 'package:flutter_trainning/shared_preference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -29,16 +30,17 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _navigateToLanguageScreen();
+    _navigateToScreen();
   }
 
-  void _navigateToLanguageScreen() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  void _navigateToScreen() async {
+    CommonPreference.sharedPreferences = await SharedPreferences.getInstance();
     await Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => sharedPreferences.getString("Selected Language") == null ? const SelectLanguageScreen() : const LoginScreen()));
+              builder: (context) =>
+                  CommonPreference.sharedPreferences.getString("Selected Language") == null ? const SelectLanguageScreen() : const LoginScreen()));
     });
   }
 }
