@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_trainning/onboarding/splash_screen.dart';
+import 'package:flutter_trainning/home/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const SplashScreen(),
+      home: const HomeScreen(),
     );
   }
 }
