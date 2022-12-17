@@ -77,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             color: Colors.white.withOpacity(0.2),
                           ),
+                          // TODO: Add padding between two button
                           child: const IconButton(
                             onPressed: null,
                             icon: Image(
